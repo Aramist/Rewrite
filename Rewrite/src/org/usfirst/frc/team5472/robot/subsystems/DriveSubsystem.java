@@ -52,14 +52,17 @@ public class DriveSubsystem extends Subsystem {
 		};
 
 		velocitySource = new PIDSource() {
-
+			
+			private PIDSourceType type = null;
+			
 			@Override
 			public void setPIDSourceType(PIDSourceType pidSource) {
+				type = pidSource;
 			}
 
 			@Override
 			public PIDSourceType getPIDSourceType() {
-				return null;
+				return type;
 			}
 
 			@Override
