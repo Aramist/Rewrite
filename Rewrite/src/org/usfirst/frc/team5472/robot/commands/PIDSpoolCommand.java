@@ -17,11 +17,11 @@ public class PIDSpoolCommand extends Command {
 	@Override
 	public void execute() {
 		Robot.getInstance().getShootSubsystem().PIDSpool(rpm);
+		finished = true;
 	}
 
 	@Override
 	public void end() {
-		Robot.getInstance().getShootSubsystem().stopFlywheel();
 	}
 
 	@Override

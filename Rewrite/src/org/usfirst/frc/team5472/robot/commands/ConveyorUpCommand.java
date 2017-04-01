@@ -15,12 +15,12 @@ public class ConveyorUpCommand extends Command {
 	@Override
 	public void execute() {
 		Robot.getInstance().getFeedSubsystem().enableConveyor();
+		Robot.getInstance().getFeedSubsystem().enableAgitator();
 		finished = true;
 	}
 
 	@Override
 	public void end() {
-		Robot.getInstance().getFeedSubsystem().disableConveyor();
 	}
 
 	@Override

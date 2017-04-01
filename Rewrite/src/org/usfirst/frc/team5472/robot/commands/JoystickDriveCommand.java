@@ -32,7 +32,7 @@ public class JoystickDriveCommand extends Command {
 		throttle = expo ? applyExponentialTransform(throttle) : throttle;
 		twist = expo ? applyExponentialTransform(twist) : twist;
 
-		Robot.getInstance().getDriveSubsystem().manualDrive(throttle + twist, throttle - twist);
+		Robot.getInstance().getDriveSubsystem().manualDrive(throttle - twist, throttle + twist);
 	}
 
 	private double applyExponentialTransform(double d) {

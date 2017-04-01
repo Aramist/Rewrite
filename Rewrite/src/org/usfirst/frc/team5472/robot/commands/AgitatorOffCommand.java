@@ -4,17 +4,17 @@ import org.usfirst.frc.team5472.robot.Robot;
 
 import edu.wpi.first.wpilibj.command.Command;
 
-public class AgitatorInCommand extends Command {
+public class AgitatorOffCommand extends Command {
 
 	private boolean finished;
 
-	public AgitatorInCommand() {
+	public AgitatorOffCommand() {
 		finished = false;
 	}
 
 	@Override
 	public void execute() {
-		Robot.getInstance().getFeedSubsystem().enableAgitator();
+		Robot.getInstance().getFeedSubsystem().disableAgitator();
 		finished = true;
 	}
 

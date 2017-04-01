@@ -9,6 +9,7 @@ public class Config {
 	private double agitatorSpeed;
 	private double conveyorSpeed;
 	private double feederSpeed;
+	private double susanSpeed;
 
 	public Config() {
 		updateValues();
@@ -20,6 +21,7 @@ public class Config {
 		agitatorSpeed = SmartDashboard.getNumber("Agitator Speed", 1.0);
 		conveyorSpeed = SmartDashboard.getNumber("Conveyor Speed", 0.5);
 		feederSpeed = SmartDashboard.getNumber("Feeder Speed", 1.0);
+		susanSpeed = SmartDashboard.getNumber("Susan Speed", 0.1);
 	}
 
 	public boolean useExponentialControls() {
@@ -42,4 +44,7 @@ public class Config {
 		return conveyorSpeed;
 	}
 
+	public double getSusanSpeed() {
+		return susanSpeed;
+	}
 }

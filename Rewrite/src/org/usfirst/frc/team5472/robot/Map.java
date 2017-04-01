@@ -20,8 +20,11 @@ public class Map {
 	public static final int shootCAN = 2;
 	public static final int susanCAN = 5;
 
-	public static final int encoderDIOA = 0;
-	public static final int encoderDIOB = 1;
+	public static final int leftEncoderDIOA = 2;
+	public static final int leftEncoderDIOB = 3;
+
+	public static final int rightEncoderDIOA = 0;
+	public static final int rightEncoderDIOB = 1;
 
 	// Pneumatics IDs
 	public static final int shiftGearSolenoidL = 4;
@@ -56,9 +59,9 @@ public class Map {
 	public static final double shooterF = 0.0265;
 	public static final int shooterIZone = 40;
 
-	public static final double driveAngleP = 0.0500;
-	public static final double driveAngleI = 0.1500;
-	public static final double driveAngleD = 0.3000;
+	public static final double driveAngleP = 0.0010;
+	public static final double driveAngleI = 0.0000;
+	public static final double driveAngleD = 0.0000;
 
 	public static final double driveVelocityP = 0.1500;
 	public static final double driveVelocityI = 0.0000;

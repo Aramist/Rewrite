@@ -9,8 +9,6 @@ public class FeedCommand extends Command {
 	private boolean finished = false;
 
 	public FeedCommand() {
-		requires(Robot.getInstance().getFeedSubsystem());
-
 	}
 
 	@Override
@@ -26,7 +24,6 @@ public class FeedCommand extends Command {
 
 	@Override
 	public void end() {
-		Robot.getInstance().getFeedSubsystem().disableFeeder();
 	}
 
 	@Override

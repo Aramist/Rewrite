@@ -1,6 +1,20 @@
 package org.usfirst.frc.team5472.robot;
 
+import org.usfirst.frc.team5472.robot.commands.ConveyorDownCommand;
+import org.usfirst.frc.team5472.robot.commands.ConveyorOffCommand;
+import org.usfirst.frc.team5472.robot.commands.ConveyorUpCommand;
+import org.usfirst.frc.team5472.robot.commands.DriveShiftCommand;
 import org.usfirst.frc.team5472.robot.commands.FeedCommand;
+import org.usfirst.frc.team5472.robot.commands.FeedOffCommand;
+import org.usfirst.frc.team5472.robot.commands.FeedReverseCommand;
+import org.usfirst.frc.team5472.robot.commands.LiftDownCommand;
+import org.usfirst.frc.team5472.robot.commands.LiftOffCommand;
+import org.usfirst.frc.team5472.robot.commands.LiftShiftCommand;
+import org.usfirst.frc.team5472.robot.commands.LiftUpCommand;
+import org.usfirst.frc.team5472.robot.commands.PIDSpoolCommand;
+import org.usfirst.frc.team5472.robot.commands.PIDSpoolOffCommand;
+import org.usfirst.frc.team5472.robot.commands.SusanLeftCommand;
+import org.usfirst.frc.team5472.robot.commands.SusanRightCommand;
 
 import com.ahschool.bd543491.frcutils.POVButton;
 import com.ahschool.bd543491.frcutils.xbox.XBOXController;
@@ -14,7 +28,6 @@ public class Controls {
 	private Joystick stick;
 	private XBOXController xbox;
 
-	@SuppressWarnings("unused")
 	public Controls() {
 		stick = new Joystick(0);
 		xbox = new XBOXController(1);
@@ -29,7 +42,38 @@ public class Controls {
 		Button susanLeft = new POVButton(xbox, Map.susanLeftButton);
 		Button susanRight = new POVButton(xbox, Map.susanRightButton);
 
-		feed.whileActive(new FeedCommand());
+		Button spool = xbox.getButton(Map.shootButton);
+
+		Button conveyor = xbox.getButton(Map.conveyorButton);
+		Button conveyorReverse = xbox.getButton(Map.conveyorReverseButton);
+
+		feed.whenPressed(new FeedCommand());
+		reverseFeed.whenPressed(new FeedReverseCommand());
+		feed.whenReleased(new FeedOffCommand());
+		reverseFeed.whenReleased(new FeedOffCommand());
+
+		lift.whenPressed(new LiftUpCommand());
+		lift.whenReleased(new LiftOffCommand());
+
+		reverseLift.whenPressed(new LiftDownCommand());
+		reverseLift.whenReleased(new LiftOffCommand());
+
+		shiftLift.whenPressed(new LiftShiftCommand());
+		shiftGear.whenPressed(new DriveShiftCommand());
+		shiftGear.whenReleased(new DriveShiftCommand());
+
+		spool.whenPressed(new PIDSpoolCommand());
+		spool.whenReleased(new PIDSpoolOffCommand());
+
+		conveyor.whenPressed(new ConveyorUpCommand());
+		conveyor.whenReleased(new ConveyorOffCommand());
+
+		conveyorReverse.whenPressed(new ConveyorDownCommand());
+		conveyorReverse.whenReleased(new ConveyorOffCommand());
+
+		susanLeft.whileHeld(new SusanLeftCommand());
+		susanRight.whileHeld(new SusanRightCommand());
+
 	}
 
 	public Joystick getJoystick() {

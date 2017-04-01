@@ -4,31 +4,23 @@ import org.usfirst.frc.team5472.robot.Robot;
 
 import edu.wpi.first.wpilibj.command.Command;
 
-public class AgitatorInCommand extends Command {
+public class DriveShiftCommand extends Command {
 
 	private boolean finished;
 
-	public AgitatorInCommand() {
+	public DriveShiftCommand() {
 		finished = false;
 	}
 
 	@Override
 	public void execute() {
-		Robot.getInstance().getFeedSubsystem().enableAgitator();
+		Robot.getInstance().getDriveSubsystem().shift();
 		finished = true;
 	}
 
 	@Override
-	public void end() {
-	}
-
-	@Override
-	public void interrupted() {
-		end();
-	}
-
-	@Override
-	public boolean isFinished() {
+	protected boolean isFinished() {
 		return finished;
 	}
+
 }

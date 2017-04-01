@@ -25,7 +25,6 @@ public class LiftUpCommand extends Command {
 
 	@Override
 	public void end() {
-		Robot.getInstance().getLiftSubsystem().stop();
 	}
 
 	@Override

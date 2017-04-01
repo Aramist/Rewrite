@@ -4,22 +4,21 @@ import org.usfirst.frc.team5472.robot.Robot;
 
 import edu.wpi.first.wpilibj.command.Command;
 
-public class LiftDownCommand extends Command {
+public class LiftShiftCommand extends Command {
 
 	private boolean finished = false;
 
-	public LiftDownCommand() {
+	public LiftShiftCommand() {
 		requires(Robot.getInstance().getLiftSubsystem());
 	}
 
 	@Override
 	public void initialize() {
-		// I'm the one who doesn't do enough
 	}
 
 	@Override
 	public void execute() {
-		Robot.getInstance().getLiftSubsystem().downLift();
+		Robot.getInstance().getLiftSubsystem().shift();
 		finished = true;
 	}
 

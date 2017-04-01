@@ -1,11 +1,15 @@
 package org.usfirst.frc.team5472.robot;
 
 import java.io.BufferedWriter;
+import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Paths;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+
+import jaci.pathfinder.Pathfinder;
+import jaci.pathfinder.Trajectory;
 
 public class Logger {
 
@@ -97,6 +101,16 @@ public class Logger {
 		for (double d : doubles)
 			r.append(d + ", ");
 		log(r.substring(0, r.length() - 2));
+	}
+
+	public void saveTrajectory(Trajectory trajectory) {
+		try {
+			Paths.get("/home/lvuser/trajectories/").toFile().mkdirs();
+			File trajectoryFile = Paths.get("/home/lvuser/trajectories/trajectory.csv").toFile();
+			Pathfinder.writeToCSV(trajectoryFile, trajectory);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 
 	public void disable() {

@@ -4,11 +4,11 @@ import org.usfirst.frc.team5472.robot.Robot;
 
 import edu.wpi.first.wpilibj.command.Command;
 
-public class LiftDownCommand extends Command {
+public class LiftOffCommand extends Command {
 
 	private boolean finished = false;
 
-	public LiftDownCommand() {
+	public LiftOffCommand() {
 		requires(Robot.getInstance().getLiftSubsystem());
 	}
 
@@ -19,7 +19,7 @@ public class LiftDownCommand extends Command {
 
 	@Override
 	public void execute() {
-		Robot.getInstance().getLiftSubsystem().downLift();
+		Robot.getInstance().getLiftSubsystem().stop();
 		finished = true;
 	}
 

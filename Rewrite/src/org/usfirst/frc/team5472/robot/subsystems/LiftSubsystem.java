@@ -6,6 +6,7 @@ import com.ctre.CANTalon;
 
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Solenoid;
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
@@ -38,6 +39,8 @@ public class LiftSubsystem extends Subsystem {
 				else
 					SmartDashboard.putString("LiftSolenoid", "UNWIND");// check
 
+				SmartDashboard.putNumber("Lift Motor Current", current);
+
 				if (current > 20)
 					SmartDashboard.putString("LiftMonitor", "CURRENT TOO HIGH");
 				else
@@ -59,13 +62,22 @@ public class LiftSubsystem extends Subsystem {
 	}
 
 	public void upLift() {
-		liftSolenoid0.set(true);
+		if (!liftSolenoid0.get()) {
+			liftSolenoid0.set(true);
+			Timer.delay(0.1);
+		}
 		liftMotor.set(lift);
 	}
 
 	public void downLift() {
-		liftSolenoid0.set(false);
+		if (liftSolenoid0.get()) {
+			liftSolenoid0.set(false);
+			Timer.delay(0.1);
+		}
 		liftMotor.set(-1 * lift);
 	}
 
+	public void shift() {
+		liftSolenoid0.set(!liftSolenoid0.get());
+	}
 }

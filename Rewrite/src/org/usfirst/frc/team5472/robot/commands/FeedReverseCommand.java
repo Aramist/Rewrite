@@ -2,14 +2,13 @@ package org.usfirst.frc.team5472.robot.commands;
 
 import org.usfirst.frc.team5472.robot.Robot;
 
-import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.command.Command;
 
-public class CloggedFeedCommand extends Command {
+public class FeedReverseCommand extends Command {
 
 	private boolean finished = false;
 
-	public CloggedFeedCommand(Joystick j) {
+	public FeedReverseCommand() {
 		requires(Robot.getInstance().getFeedSubsystem());
 	}
 
@@ -26,7 +25,6 @@ public class CloggedFeedCommand extends Command {
 
 	@Override
 	public void end() {
-		Robot.getInstance().getFeedSubsystem().disableFeeder();
 	}
 
 	@Override

@@ -30,12 +30,13 @@ public class ShootSubsystem extends Subsystem {
 		shoot.setPID(Map.shooterP, Map.shooterI, Map.shooterD, Map.shooterF, Map.shooterIZone, 0.0, 0);
 
 		susan.enableBrakeMode(true);
-		susan.setFeedbackDevice(FeedbackDevice.CtreMagEncoder_Absolute);
+		susan.setFeedbackDevice(FeedbackDevice.CtreMagEncoder_Relative);
 		susan.changeControlMode(TalonControlMode.Position);
 		susan.reverseOutput(false);
-		susan.reverseSensor(true);
+		susan.reverseSensor(false);
 		susan.configPeakOutputVoltage(3, -3);
-		susan.setPID(0.5, 0.0, 1.0); // TODO: Configure this
+		susan.setPID(0.5, 0.0, 0.0); // TODO: Configure this
+		susan.setEncPosition(0);
 	}
 
 	public void PIDSpool(double rpm) {
@@ -49,6 +50,10 @@ public class ShootSubsystem extends Subsystem {
 		susan.changeControlMode(TalonControlMode.Position);
 		susan.enable();
 		susan.setSetpoint(pos);
+	}
+
+	public double getSusanPosition() {
+		return susan.get();
 	}
 
 	public void setSusan(double d) {

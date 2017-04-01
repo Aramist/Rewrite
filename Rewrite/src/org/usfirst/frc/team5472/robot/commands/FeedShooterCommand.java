@@ -9,7 +9,7 @@ public class FeedShooterCommand extends CommandGroup {
 	public FeedShooterCommand() {
 		requires(Robot.getInstance().getShootSubsystem());
 		this.addParallel(new ConveyorUpCommand());
-		this.addParallel(new AgitatorWaveCommand());
+		// this.addParallel(new AgitatorWaveCommand());
 	}
 
 }

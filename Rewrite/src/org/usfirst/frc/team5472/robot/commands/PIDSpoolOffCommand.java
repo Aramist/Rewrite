@@ -4,22 +4,17 @@ import org.usfirst.frc.team5472.robot.Robot;
 
 import edu.wpi.first.wpilibj.command.Command;
 
-public class LiftDownCommand extends Command {
+public class PIDSpoolOffCommand extends Command {
 
-	private boolean finished = false;
+	private boolean finished;
 
-	public LiftDownCommand() {
-		requires(Robot.getInstance().getLiftSubsystem());
-	}
-
-	@Override
-	public void initialize() {
-		// I'm the one who doesn't do enough
+	public PIDSpoolOffCommand() {
+		finished = false;
 	}
 
 	@Override
 	public void execute() {
-		Robot.getInstance().getLiftSubsystem().downLift();
+		Robot.getInstance().getShootSubsystem().stopFlywheel();
 		finished = true;
 	}
 
