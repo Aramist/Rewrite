@@ -62,7 +62,7 @@ public class Autonomous {
 			if (pos == 0)
 				autoCommand = null;
 			else if (pos == 2)
-				autoCommand = new MidToMid();
+				autoCommand = new MidToMid(shooting.getSelected().booleanValue());
 			else
 				autoCommand = new SideToSide(all, pos, shooting.getSelected().booleanValue());
 		}
