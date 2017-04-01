@@ -7,10 +7,6 @@ import org.usfirst.frc.team5472.robot.commands.JoystickDriveCommand;
 import com.kauailabs.navx.frc.AHRS;
 
 import edu.wpi.first.wpilibj.Encoder;
-import edu.wpi.first.wpilibj.PIDController;
-import edu.wpi.first.wpilibj.PIDOutput;
-import edu.wpi.first.wpilibj.PIDSource;
-import edu.wpi.first.wpilibj.PIDSourceType;
 import edu.wpi.first.wpilibj.SerialPort.Port;
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.Timer;
@@ -27,9 +23,6 @@ public class DriveSubsystem extends Subsystem {
 
 	private VictorSP frontLeft, frontRight, backLeft, backRight;
 	private AHRS navx;
-	private PIDOutput angleOutput, velocityOutput;
-	private PIDSource velocitySource, driveStraightSource;
-	private PIDController anglePID, drivePID, velocityPID;
 	private Encoder leftEnc;
 	private Encoder rightEnc;
 
@@ -63,74 +56,6 @@ public class DriveSubsystem extends Subsystem {
 		frontRight.setInverted(false);
 		backRight.setInverted(false);
 
-		angleOutput = (double d) -> {
-			double[] motorValues = get();
-			manualDrive(motorValues[0] - d, motorValues[1] + d);
-		};
-
-		velocityOutput = (double d) -> {
-			manualDrive(d, d);
-		};
-
-		velocitySource = new PIDSource() {
-
-			private PIDSourceType type = null;
-
-			@Override
-			public void setPIDSourceType(PIDSourceType pidSource) {
-				type = pidSource;
-			}
-
-			@Override
-			public PIDSourceType getPIDSourceType() {
-				return type;
-			}
-
-			@Override
-			public double pidGet() {
-				double x = navx.getVelocityX(), y = navx.getVelocityY(), z = navx.getVelocityZ();
-				return Math.sqrt(x * x + y * y + z * z);
-			}
-		};
-
-		driveStraightSource = new PIDSource() {
-			private PIDSourceType stype = PIDSourceType.kDisplacement;
-
-			@Override
-			public void setPIDSourceType(PIDSourceType type) {
-				stype = type;
-			}
-
-			@Override
-			public PIDSourceType getPIDSourceType() {
-				return stype;
-			}
-
-			@Override
-			public double pidGet() {
-				return leftEnc.get() - rightEnc.get();
-			}
-		};
-
-		anglePID = new PIDController(Map.driveAngleP, Map.driveAngleI, Map.driveAngleD, navx, angleOutput);
-		drivePID = new PIDController(Map.driveStraightP, Map.driveStraightI, Map.driveStraightD, driveStraightSource, angleOutput);
-		velocityPID = new PIDController(Map.driveVelocityP, Map.driveVelocityI, Map.driveVelocityD, velocitySource, velocityOutput);
-
-		anglePID.setInputRange(-180, 180);
-		anglePID.setOutputRange(-0.5, 0.5);
-		anglePID.setContinuous(true);
-		anglePID.setAbsoluteTolerance(2);
-
-		drivePID.setInputRange(-1800, 1800);
-		drivePID.setOutputRange(-0.25, 0.25);
-		drivePID.setContinuous(false);
-		drivePID.setAbsoluteTolerance(40);
-
-		velocityPID.setInputRange(0, 20);
-		velocityPID.setOutputRange(0, 1.0);
-		velocityPID.setContinuous(false);
-		velocityPID.setAbsoluteTolerance(0.1);
-
 		left.set(false);
 		right.set(false);
 	}
@@ -144,10 +69,6 @@ public class DriveSubsystem extends Subsystem {
 
 	public double[] get() {
 		return new double[] { frontLeft.get(), frontRight.get(), backLeft.get(), backRight.get() };
-	}
-
-	public void driveWithHeading(double throttle, double heading) {
-
 	}
 
 	public void driveStraight(double throttle) {
@@ -173,31 +94,8 @@ public class DriveSubsystem extends Subsystem {
 		}
 	}
 
-	public void turnToHeading(double heading, boolean autoStop) {
-		stop();
-		getNavx().reset();
-		anglePID.setSetpoint(heading);
-		anglePID.enable();
-		if (autoStop)
-			while (!anglePID.onTarget())
-				Timer.delay(0.005);
-	}
-
-	public boolean doneTurning() {
-		return anglePID.isEnabled() && anglePID.onTarget();
-	}
-
-	public void driveWithVelocity(double velocity) {
-		stop();
-		velocityPID.setSetpoint(velocity);
-		velocityPID.enable();
-	}
-
 	public void stop() {
 		manualDrive(0.0, 0.0);
-		anglePID.disable();
-		drivePID.disable();
-		velocityPID.disable();
 	}
 
 	public AHRS getNavx() {
