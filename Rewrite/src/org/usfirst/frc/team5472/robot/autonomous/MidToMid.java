@@ -9,9 +9,13 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 
 public class MidToMid extends CommandGroup {
 
-	public MidToMid(boolean shoot) {
+	public MidToMid(int shoot) {
 		addSequential(new DriveDistance(1.7526));
-		if (shoot) {
+		addSequential(new DelayCommand(3.0));
+		addSequential(new DriveDistance(-0.18));
+		addSequential(new DelayCommand(0.2));
+		addSequential(new DriveDistance(0.18));
+		if (shoot == 1) {
 			addSequential(new ConveyorUpCommand());
 			addSequential(new PIDSpoolCommand());
 			addSequential(new DelayCommand(4));

@@ -17,8 +17,8 @@ public class Map {
 
 	// These are CAN bus IDs
 	public static final int liftCAN = 4;
+	public static final int otherLiftCAN = 5;
 	public static final int shootCAN = 2;
-	public static final int susanCAN = 5;
 
 	public static final int leftEncoderDIOA = 2;
 	public static final int leftEncoderDIOB = 3;
@@ -35,6 +35,7 @@ public class Map {
 	public static final int feedButton = 1;
 	public static final int feedReverseButton = 5;
 	public static final int liftButton = 6;
+	public static final int liftLowPowerButton = 7;
 	public static final int liftReverseButton = 4;
 	public static final int shiftLiftSolenoidButton = 3;
 	public static final int shiftDriveSolenoidButton = 2;
@@ -50,7 +51,7 @@ public class Map {
 	public static final double conveyorSpeed = 0.6;
 	public static final double susanSpeed = 0.1;
 
-	public static final double shooterRPM = 3165;
+	public static final double shooterRPM = 3265;
 
 	// PID
 	public static final double shooterP = 0.2000;
@@ -59,15 +60,9 @@ public class Map {
 	public static final double shooterF = 0.0265;
 	public static final int shooterIZone = 40;
 
-	public static final double driveAngleP = 0.0010;
-	public static final double driveAngleI = 0.0000;
-	public static final double driveAngleD = 0.0000;
-
-	public static final double driveVelocityP = 0.1500;
-	public static final double driveVelocityI = 0.0000;
-	public static final double driveVelocityD = 0.3000;
-
-	public static final double driveStraightP = 0.1500;
-	public static final double driveStraightI = 0.0000;
-	public static final double driveStraightD = 0.3000;
+	// public static final double shooterP = 0.1000;
+	// public static final double shooterI = 0.0000;
+	// public static final double shooterD = 0.0000;
+	// public static final double shooterF = 0.0240;
+	// public static final int shooterIZone = 40;
 }

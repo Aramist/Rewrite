@@ -12,6 +12,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class LiftSubsystem extends Subsystem {
 	private CANTalon liftMotor;
+	private CANTalon liftMotor2;
 	private Solenoid liftSolenoid0;
 
 	private double lift = 1.0;
@@ -20,6 +21,7 @@ public class LiftSubsystem extends Subsystem {
 		super("Lift");
 
 		liftMotor = new CANTalon(Map.liftCAN);
+		liftMotor2 = new CANTalon(Map.otherLiftCAN);
 		liftSolenoid0 = new Solenoid(Map.liftSolenoid);
 
 		new Thread(() -> {
@@ -58,7 +60,7 @@ public class LiftSubsystem extends Subsystem {
 	public void stop() {
 		liftSolenoid0.set(true);// make sure it's locked and can't unwind
 		liftMotor.set(0.0);
-
+		liftMotor2.set(0.0);
 	}
 
 	public void upLift() {
@@ -67,6 +69,16 @@ public class LiftSubsystem extends Subsystem {
 			Timer.delay(0.1);
 		}
 		liftMotor.set(lift);
+		liftMotor2.set(-lift);
+	}
+
+	public void upLiftLowPower() {
+		if (!liftSolenoid0.get()) {
+			liftSolenoid0.set(true);
+			Timer.delay(0.1);
+		}
+		liftMotor.set(lift * 0.6);
+		liftMotor2.set(-lift * 0.6);
 	}
 
 	public void downLift() {
@@ -74,10 +86,19 @@ public class LiftSubsystem extends Subsystem {
 			liftSolenoid0.set(false);
 			Timer.delay(0.1);
 		}
-		liftMotor.set(-1 * lift);
+		liftMotor.set(-lift);
+		liftMotor2.set(lift);
 	}
 
 	public void shift() {
 		liftSolenoid0.set(!liftSolenoid0.get());
+	}
+
+	public double getLiftCurrentA() {
+		return liftMotor.getOutputCurrent();
+	}
+
+	public double getLiftCurrentB() {
+		return liftMotor2.getOutputCurrent();
 	}
 }

@@ -126,8 +126,9 @@ public class Robot extends IterativeRobot {
 		Scheduler.getInstance().run();
 		SmartDashboard.putNumber("Left Encoder", getDriveSubsystem().getLeftEncoderCount());
 		SmartDashboard.putNumber("Right Encoder", getDriveSubsystem().getRightEncoderCount());
-		SmartDashboard.putNumber("Turret", getShootSubsystem().getSusanPosition());
 		SmartDashboard.putNumber("Pressure", calculatePressureValue());
+		SmartDashboard.putNumber("Lift Motor 1 Current", getLiftSubsystem().getLiftCurrentA());
+		SmartDashboard.putNumber("Lift Motor 2 Current", getLiftSubsystem().getLiftCurrentB());
 	}
 
 	@Override

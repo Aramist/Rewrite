@@ -17,7 +17,7 @@ public class Config {
 
 	public void updateValues() {
 		useExpo = SmartDashboard.getBoolean("Use Exponential", false);
-		shooterRPM = SmartDashboard.getNumber("Shooter Speed (rpm)", 3165.0);
+		shooterRPM = SmartDashboard.getNumber("Shooter Speed (rpm)", 3200.0);
 		agitatorSpeed = SmartDashboard.getNumber("Agitator Speed", 1.0);
 		conveyorSpeed = SmartDashboard.getNumber("Conveyor Speed", 0.5);
 		feederSpeed = SmartDashboard.getNumber("Feeder Speed", 1.0);

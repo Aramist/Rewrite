@@ -71,27 +71,45 @@ public class DriveSubsystem extends Subsystem {
 		return new double[] { frontLeft.get(), frontRight.get(), backLeft.get(), backRight.get() };
 	}
 
-	public void driveStraight(double throttle) {
+	public void driveStraight(double val, double throttle) {
 		double left = throttle, right = throttle;
-		double error = leftEnc.get() - rightEnc.get();
-		left -= error * 0.01;
-		right += error * 0.01;
+		double error = val - (leftEnc.get() - rightEnc.get());
+		left -= error * 0.001;
+		right += error * 0.001;
 		manualDrive(left, right);
 	}
 
+	// public void driveStraight(double throttle) {
+	// double left = throttle, right = throttle;
+	// double error = (leftEnc.get() - rightEnc.get());
+	// left -= error * 0.01;
+	// right += error * 0.01;
+	// manualDrive(left, right);
+	// }
+
 	public void turnToHeading(double heading) {
-		while (Math.abs(heading - navx.getAngle()) > 1) {
-			double left = 0, right = 0;
+		long timeout = 2000;
+		long startTime = System.currentTimeMillis();
+		while (Math.abs(heading - navx.getAngle()) > 1 && (System.currentTimeMillis() - startTime < timeout)) {
+			// double left = 0, right = 0;
+			double right = 0;
 			double error = heading - navx.getAngle();
 			if (error > 180)
 				error = 360 - error;
-			left -= error / 40.0;
-			right += error / 40.0;
-			manualDrive(left, right);
+			// left -= error / 30.0;
+			right += error / 15.0;
+			// left = truncate(left, 0.6);
+			right = truncate(right, 0.8);
+			manualDrive(-right, right);
 			if (!Robot.getInstance().isAutonomous())
 				break;
 			Timer.delay(0.01);
 		}
+	}
+
+	// @SuppressWarnings("unused")
+	private double truncate(double num, double magnitude) {
+		return Math.signum(num) * Math.min(Math.abs(num), Math.abs(magnitude));
 	}
 
 	public void stop() {

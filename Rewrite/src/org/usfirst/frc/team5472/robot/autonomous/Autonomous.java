@@ -1,5 +1,6 @@
 package org.usfirst.frc.team5472.robot.autonomous;
 
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
@@ -13,8 +14,7 @@ public class Autonomous {
 
 	private SendableChooser<Boolean> autoEnabled = new SendableChooser<>();
 	private SendableChooser<Location> location = new SendableChooser<>();
-	private SendableChooser<Alliance> alliance = new SendableChooser<>();
-	private SendableChooser<Boolean> shooting = new SendableChooser<>();
+	private SendableChooser<Integer> shooting = new SendableChooser<>();
 	private Command autoCommand = null;
 
 	public Autonomous() {
@@ -25,21 +25,19 @@ public class Autonomous {
 		location.addObject("Left", Location.LEFT);
 		location.addObject("Right", Location.RIGHT);
 
-		alliance.addDefault("Blue", Alliance.Blue);
-		alliance.addObject("Red", Alliance.Red);
-
-		shooting.addDefault("Not shooting", new Boolean(false));
-		shooting.addObject("Shooting", new Boolean(true));
+		shooting.addDefault("Just Gear", new Integer(0));
+		shooting.addObject("Gear and Shoot", new Integer(1));
+		shooting.addObject("Just hopper and shooting", new Integer(2));
+		shooting.addObject("Just sit there and shoot", new Integer(-1));
 
 		SmartDashboard.putData("AutonomousEnabled", autoEnabled);
-		SmartDashboard.putData("Alliance", alliance);
 		SmartDashboard.putData("Position", location);
 		SmartDashboard.putData("Shooting", shooting);
 	}
 
 	public void initAuto() {
 		boolean enabled = autoEnabled.getSelected().booleanValue();
-		Alliance all = alliance.getSelected();
+		Alliance all = DriverStation.getInstance().getAlliance();
 		Location loc = location.getSelected();
 
 		int pos = 0;
@@ -62,9 +60,9 @@ public class Autonomous {
 			if (pos == 0)
 				autoCommand = null;
 			else if (pos == 2)
-				autoCommand = new MidToMid(shooting.getSelected().booleanValue());
+				autoCommand = new MidToMid(shooting.getSelected().intValue());
 			else
-				autoCommand = new SideToSide(all, pos, shooting.getSelected().booleanValue());
+				autoCommand = new SideToSide(all, pos, shooting.getSelected().intValue());
 		}
 		if (autoCommand != null)
 			autoCommand.start();
